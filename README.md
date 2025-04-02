@@ -21,3 +21,5 @@ We distinguish between two main modes of access: remote (e.g. from local machine
 - `compare_access_grib_zarr_server_side.ipynb` - same as previous, but without dask.
 
 ## Results do far:
+
+[In this this file for a moment](https://docs.google.com/spreadsheets/d/1xj_2v5IYKr2tEPa3Z9Uf9-kquveRIbx1MIeQeBGfQHY/edit?usp=sharing)
