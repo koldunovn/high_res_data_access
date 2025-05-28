@@ -7,19 +7,20 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=12
 #SBATCH --time=02:00:00
-#SBATCH --mem=64G 
+#SBATCH --mem=200G
 set -e
 
-vars=(tcwv 2t tprate)
+var=2t
 catalog=climatedt-phase1
 model=IFS-FESOM
-exp=story-2017-control
+exps=(story-2017-historical-bridge story-2017-historical-HPC story-2017-historical-stac)
 source=hourly-hpz9-atm2d
-freq=daily
-regrid=r005
+freq=monthly
+regrid=r100
 outdir=/scratch/project_462000911/mnurisso/data-access
 tmpdir=/scratch/project_462000911/mnurisso/lra_tmp
 
-for var in "${vars[@]}"; do
+for exp in "${exps[@]}"; do
+    echo "Processing experiment: $exp"
     python lra_prec_italy.py --var $var --catalog $catalog --model $model --exp $exp --source $source --freq $freq --regrid $regrid
 done
