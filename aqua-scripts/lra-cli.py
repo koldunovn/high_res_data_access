@@ -24,15 +24,19 @@ if __name__ == '__main__':
     frequency = args.freq
     outdir = args.outdir
     tmpdir = args.tmpdir
+    region = None
+    #region={'name': 'Italy', 'lon': (6, 19.5), 'lat': (35, 50)}
 
     print(f"Generating LRA for {varname} for {model} {exp} {source} from {catalog}")
+    if region:
+        print(f"Region specified: {region}")
     lra = LRAgenerator(
                     catalog=catalog, model=model, exp=exp, source=source,
                     var=varname, resolution=regrid, stat='mean', drop=True,
                     frequency=frequency, fix=True, nproc=12,
                     outdir=outdir, tmpdir=tmpdir,
                     loglevel="DEBUG", definitive=True, compact="cdo",
-                    region={'name': 'Italy', 'lon': (6, 19.5), 'lat': (35, 50)})
+                    region=region)
     print("---CHECK------")
     lra.check_integrity(varname)
     print("---RETRIEVE------")
