@@ -1,4 +1,5 @@
 import argparse
+import time
 from aqua import LRAgenerator
 
 if __name__ == '__main__':
@@ -25,10 +26,11 @@ if __name__ == '__main__':
     outdir = args.outdir
     tmpdir = args.tmpdir
     region = None
-    #region={'name': 'Italy', 'lon': (6, 19.5), 'lat': (35, 50)}
 
     print(f"Generating LRA for {varname} for {model} {exp} {source} from {catalog}")
-    if region:
+    start_time = time.time()
+    print(f"Start time: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(start_time))}")
+    if region is not None:
         print(f"Region specified: {region}")
     lra = LRAgenerator(
                     catalog=catalog, model=model, exp=exp, source=source,
@@ -43,3 +45,7 @@ if __name__ == '__main__':
     lra.retrieve()
     print("---GENERATE------")
     lra.generate_lra()
+    end_time = time.time()
+    print(f"End time: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(end_time))}")
+    print(f"Total time taken: {end_time - start_time:.2f} seconds")
+    print("LRA generation completed successfully.")
