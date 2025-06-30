@@ -1,0 +1,3 @@
+# Remove slurm output files
+*.err
+*.out
