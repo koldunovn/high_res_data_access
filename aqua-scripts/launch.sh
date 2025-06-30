@@ -22,7 +22,7 @@ tmpdir=/scratch/project_462000911/mnurisso/lra_tmp
 
 for exp in "${exps[@]}"; do
     echo "Processing experiment: $exp"
-    python lra-cli.py --var $var --catalog $catalog --model $model --exp $exp --source $source --freq $freq --regrid $regrid --outdir $outdir --tmpdir $tmpdir
+    python lra-cli.py --var $var --catalog $catalog --model $model --exp $exp --source $source --freq $freq --regrid $regrid --outdir $outdir --tmpdir $tmpdir --nproc 12
     echo "Completed processing for experiment: $exp"
     echo "----------------------------------------"
 done
