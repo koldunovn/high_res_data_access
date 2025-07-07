@@ -29,8 +29,20 @@ def plot_normalized_scaling(df_all, which_time='Total Time (s)',
     plt.figure(figsize=(10, 6))
     sns.set_theme(style='whitegrid')
 
-    sns.lineplot(data=df_norm, x='Workers', y='Normalized Speedup',# hue='Memory (GB)',
-                 marker='o', palette='viridis', linewidth=2)
+    # Update the 'Memory (GB)' column to include units for legend clarity
+    df_norm = df_norm.copy()
+    df_norm['Memory Label'] = df_norm['Memory (GB)'].astype(str) + ' GB'
+
+    sns.lineplot(
+        data=df_norm,
+        x='Workers',
+        y='Normalized Speedup',
+        hue='Memory Label',
+        marker='o',
+        palette='viridis',
+        linewidth=2,
+        legend='auto'
+    )
 
     # Perfect scaling line (linear with Workers)
     workers_sorted = sorted(df_norm['Workers'].unique())
