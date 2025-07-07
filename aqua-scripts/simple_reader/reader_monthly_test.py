@@ -20,12 +20,13 @@ def parse_args():
     parser.add_argument('--regrid', type=str, required=True, help="Target grid")
     parser.add_argument('--freq', type=str, required=True, help="Frequency of the data")
     parser.add_argument('--loglevel', type=str, default='INFO', help="Logging level")
+    parser.add_argument('--engine', type=str, default='fdb', help="Engine to use for FDB access (fdb or polytope)")
 
     return parser.parse_args()
 
 def compute(catalog: str, model: str, exp: str, source: str, var: str, nproc: int,
             startdate: str = '20180101T0000', enddate: str = '20180131T2300',
-            regrid: str = 'r100', chunking: str = None,
+            regrid: str = 'r100', chunking: str = None, engine: str = 'fdb',
             loglevel: str = 'INFO'):
     """
     Main function to compute 1 month of data using the Reader.
@@ -46,6 +47,7 @@ def compute(catalog: str, model: str, exp: str, source: str, var: str, nproc: in
         regrid (str): Target grid for regridding. Defaults to 'r100'.
         chunking (str): Chunking if the Reader default needs to be changed. Default to None.
                         Time chunking can be one of S (step), 10M, 15M, 30M, h, 1h, 3h, 6h, D, 5D, W, M, Y.
+        engine (str): Engine to use for FDB access, either 'fdb' or 'polytope'. Defaults to 'fdb'.
         loglevel (str): Logging level. Defaults to 'INFO'.
 
     Returns:
@@ -58,7 +60,7 @@ def compute(catalog: str, model: str, exp: str, source: str, var: str, nproc: in
     logger.info(f"Start time: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(start_time))}")
 
     reader = Reader(catalog=catalog, model=model, exp=exp, source=source, regrid=regrid,
-                    nproc=nproc, chunks=chunking, loglevel='ERROR')
+                    nproc=nproc, chunks=chunking, engine=engine, loglevel='ERROR')
     data = reader.retrieve(var=var, startdate=startdate, enddate=enddate)
 
     eval_starttime = time.time()
@@ -96,6 +98,7 @@ if __name__ == '__main__':
     source = args.source
     regrid = args.regrid
     frequency = args.freq
+    engine = args.engine
     nproc = args.nproc
     mem_gb = args.mem_gb
     chunking = args.chunking if args.chunking else None
@@ -118,7 +121,7 @@ if __name__ == '__main__':
     logger.info("Running warm-up (first attempt is discarded from timing)")
     _, _, _, _ = compute(catalog=catalog, model=model, exp=exp, source=source,
                          var=varname, nproc=nproc, regrid=regrid,
-                         chunking=chunking, loglevel=loglevel)
+                         chunking=chunking, engine=engine, loglevel=loglevel)
     
     create_folder('./results')  # Ensure the results directory exists
 
