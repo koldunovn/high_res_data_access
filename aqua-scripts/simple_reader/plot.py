@@ -55,11 +55,13 @@ def plot_normalized_scaling(df_all, which_time='Total Time (s)',
         plt.yscale('log')
 
     if title:
-        plt.title(title)
+        plt.title(title, fontsize=18)
     else:
-        plt.title("Normalized Execution Scaling")
-    plt.xlabel('Number of Workers')
-    plt.ylabel('Normalized Speedup (relative to lowest worker count)')
-    plt.legend()
+        plt.title("Normalized Execution Scaling", fontsize=18)
+    plt.xlabel('Number of Workers', fontsize=14)
+    plt.ylabel('Normalized Speedup (relative to lowest worker count)', fontsize=14)
+    plt.xticks(fontsize=12)
+    plt.yticks(fontsize=12)
+    plt.legend(fontsize=12)
     plt.tight_layout()
     plt.show()
