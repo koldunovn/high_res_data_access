@@ -2,4 +2,5 @@
 *.err
 *.out
 *.pyc
+*.grb
 __pycache__/
