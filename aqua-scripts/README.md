@@ -3,6 +3,8 @@
 This folder contains a series of scripts based on the [AQUA code](https://github.com/DestinE-Climate-DT/AQUA) to compute time or spatial aggregation of data.
 This is done within the effort of comparing the capabilities of accessing high-resolution data stored or accessed with different formats.
 
+A script to install AQUA specific folders and the catalog needed to perform the benchmarks is provided in the `install-aqua.sh` file. It is recommended to run this script before running any of the benchmarks.
+
 ## `simple_reader` folder
 
 This folder contains the code to read data from a source and compute the monthly aggregation of the data. The code is based on the AQUA code, but it is simplified to focus on the reading and aggregation of data.
