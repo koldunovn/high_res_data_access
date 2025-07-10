@@ -1,0 +1,6 @@
+# Remove slurm output files
+*.err
+*.out
+*.pyc
+*.grb
+__pycache__/
