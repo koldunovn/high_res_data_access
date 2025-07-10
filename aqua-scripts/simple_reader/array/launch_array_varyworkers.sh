@@ -8,12 +8,13 @@
 #SBATCH --ntasks-per-node=64
 #SBATCH --time=08:00:00
 #SBATCH --mem=128G
-#SBATCH --array=0-6
+#SBATCH --array=0-1
 
 set -euo pipefail
 
 # Set here the list of nproc and chunking values to test
-nproc_list=(1 2 4 8 16 32 64)
+#nproc_list=(1 2 4 8 16 32 64)
+nproc_list=(64 33)
 chunking_list=(D)
 
 # Total combinations
@@ -39,7 +40,8 @@ exp=story-2017-historical-HPC
 source=hourly-hpz9-atm2d
 freq=monthly
 regrid=r100
+repetitions=3
 
 python ../reader_monthly_test.py --var $var --catalog $catalog --model $model \
     --exp $exp --source $source --freq $freq --regrid $regrid --nproc $nproc \
-    --mem_gb $mem_gb --chunking $chunking
+    --mem_gb $mem_gb --chunking $chunking --repetitions=$repetitions

@@ -26,7 +26,8 @@ source=hourly-hpz9-atm2d
 freq=monthly
 regrid=r100
 engine=fdb
+repetitions=3
 
 python ../reader_monthly_test.py --var $var --catalog $catalog --model $model \
     --exp $exp --source $source --freq $freq --regrid $regrid --nproc $nproc \
-    --mem_gb $mem_gb --chunking $chunking --engine $engine
+    --mem_gb $mem_gb --chunking $chunking --engine $engine --repetitions=repetitions

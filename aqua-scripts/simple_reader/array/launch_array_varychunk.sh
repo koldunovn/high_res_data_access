@@ -39,7 +39,8 @@ exp=story-2017-historical-HPC
 source=hourly-hpz9-atm2d
 freq=monthly
 regrid=r100
+repetitions=3
 
 python ../reader_monthly_test.py --var $var --catalog $catalog --model $model \
     --exp $exp --source $source --freq $freq --regrid $regrid --nproc $nproc \
-    --mem_gb $mem_gb --chunking $chunking
+    --mem_gb $mem_gb --chunking $chunking --repetitions=$repetitions
