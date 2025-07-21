@@ -70,3 +70,15 @@ def load_all_benchmarks(path_pattern="results_*.txt"):
 
     df_list = [read_benchmark_file(f) for f in files]
     return pd.concat(df_list, ignore_index=True)
+
+def chunk_translation(df_chunk):
+    """Translate the 'Chunk Size' column in the DataFrame according to predefined mappings."""
+    # The 'Chunk Size' column has to be translated according to the following dictionary:
+    chunk_translation_dict = {
+        'h': 1,
+        '3h': 3,
+        '6h': 6,
+        'D': 24
+    }
+    df_chunk['Chunk Size'] = df_chunk['Chunk Size'].map(chunk_translation_dict)
+    return df_chunk

@@ -19,8 +19,11 @@ def parse_args():
     parser.add_argument('--source', type=str, required=True, help="Source name")
     parser.add_argument('--regrid', type=str, required=True, help="Target grid")
     parser.add_argument('--freq', type=str, required=True, help="Frequency of the data")
+    parser.add_argument('--startdate', type=str, default='20180101T0000', help='Startdate for computation')
+    parser.add_argument('--enddate', type=str, default='20180131T2300', help='Enddate for computation')
     parser.add_argument('--loglevel', type=str, default='INFO', help="Logging level")
     parser.add_argument('--engine', type=str, default='fdb', help="Engine to use for FDB access (fdb or polytope)")
+    parser.add_argument('--repetitions', type=int, default=1, help='Number of repetitions to average with. Default to 1')
 
     return parser.parse_args()
 
@@ -101,7 +104,10 @@ if __name__ == '__main__':
     engine = args.engine
     nproc = args.nproc
     mem_gb = args.mem_gb
+    startdate = args.startdate
+    enddate = args.enddate
     chunking = args.chunking if args.chunking else None
+    repetitions = args.repetitions
     loglevel = args.loglevel
 
     logger = log_configure(log_level=loglevel, log_name='ReaderMonthlyTest')
@@ -117,18 +123,20 @@ if __name__ == '__main__':
     times_compute = []
     times_io = []
 
-    # Often the first Dask run includes cluster setup and graph compilation overhead.
-    logger.info("Running warm-up (first attempt is discarded from timing)")
-    _, _, _, _ = compute(catalog=catalog, model=model, exp=exp, source=source,
-                         var=varname, nproc=nproc, regrid=regrid,
-                         chunking=chunking, engine=engine, loglevel=loglevel)
-    
-    create_folder('./results')  # Ensure the results directory exists
+    if repetitions > 1:
+        # Often the first Dask run includes cluster setup and graph compilation overhead.
+        logger.info("Running warm-up (first attempt is discarded from timing)")
+        _, _, _, _ = compute(catalog=catalog, model=model, exp=exp, source=source,
+                            var=varname, nproc=nproc, regrid=regrid,
+                            startdate=startdate, enddate=enddate,
+                            chunking=chunking, engine=engine, loglevel=loglevel)
 
-    for i in range(1, 4):  # We just want to be sure there is no high variability in the results
+    for i in range(repetitions):  # We just want to be sure there is no high variability in the results
         logger.info(f"Computing attempt {i} for variable {varname} with {nproc} workers and {mem_gb}GB memory")
         retrieve_time, compute_time, io_time, time_taken = compute(catalog=catalog, model=model, exp=exp, source=source,
-                                                                   var=varname, nproc=nproc, regrid=regrid, loglevel=loglevel)
+                                                                   var=varname, nproc=nproc, regrid=regrid,
+                                                                   startdate=startdate, enddate=enddate,
+                                                                   chunking=chunking, engine=engine, loglevel=loglevel)
         logger.info(f"Attempt {i} completed in {time_taken:.2f} seconds.")
         logger.info(f"Compute time for attempt {i}: {compute_time:.2f} seconds.")
         times_total.append(time_taken)
@@ -145,11 +153,10 @@ if __name__ == '__main__':
 
     with open(f"./{filename}", 'w') as f:
         f.write(f"## Times for {varname} with {nproc} workers and {mem_gb}GB memory\n")
-        f.write(f"## Catalog: {catalog}, Model: {model}, Experiment: {exp}, Source: {source}, Regrid: {regrid}\n")
+        f.write(f"## Catalog: {catalog}, Model: {model}, Experiment: {exp}, Source: {source}, Regrid: {regrid}, Engine: {engine}\n")
         f.write(f"## Average compute time: {sum(times_compute) / len(times_compute):.2f} seconds\n")
         f.write(f"## Average total time: {sum(times_total) / len(times_total):.2f} seconds\n")
         f.write("## Individual compute times:\n")
-        # Write something like {attempt_number}; {compute_time}; {total_time}
         f.write("## Attempt; Total Time (s); Retrieve Time (s); Compute Time (s); I/O Time (s)\n")
         for i, (total_time, retrieve_time, compute_time, io_time) in enumerate(zip(
             times_total, times_retrieve, times_compute, times_io), start=1):
