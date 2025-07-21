@@ -230,3 +230,17 @@ sources:
       variables: [129, 130, 131, 132, 133, 135, 157, 246]
       source_grid_name: tco1279
       fdb_home: '{{ FDB_PATH }}/fdb/native'
+
+  hourly-regrid:
+    description: 2t data, 1 month for regrid speed test, from 2018-01-01 to 2018-01-31
+    driver: netcdf
+    metadata:
+      source_grid_name: hpz9-nested
+      fixer_name: ifs-destine-v1
+    args:
+      urlpath:
+          - '/scratch/project_462000911/mnurisso/data-access/regrid-catalog/IFS-FESOM_story-2017-historical-HPC_hourly-hpz9-atm2d_2t_20180101T0000-20180131T2300.nc'
+      chunks:
+        time: 1
+      xarray_kwargs:
+        decode_times: True
