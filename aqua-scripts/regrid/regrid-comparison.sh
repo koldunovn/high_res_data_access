@@ -5,15 +5,15 @@
 #SBATCH --error=regrid-comparison_%j.err
 #SBATCH --account=project_462000911
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=64
+#SBATCH --ntasks-per-node=32
 #SBATCH --time=08:00:00
 #SBATCH --mem=128G
-#SBATCH --array=0-6
+#SBATCH --array=0-5
 
 set -euo pipefail
 
 # Set here the list of nproc values to test
-nproc_list=(1 2 4 8 16 32 64)
+nproc_list=(1 2 4 8 16 32)
 # Total combinations
 total_nproc=${#nproc_list[@]}
 nproc=${nproc_list[$SLURM_ARRAY_TASK_ID]}
