@@ -239,7 +239,7 @@ sources:
       fixer_name: ifs-destine-v1
     args:
       urlpath:
-          - '/scratch/project_462000911/mnurisso/data-access/regrid-catalog/IFS-FESOM_story-2017-historical-HPC_hourly-hpz9-atm2d_2t_20180101T0000-20180131T2300.nc'
+          - '/scratch/project_462000911/mnurisso/data-access/regrid-catalog/IFS-FESOM_story-2017-historical-HPC_hourly-hpz9-atm2d_*_20180101T0000-20180131T2300.nc'
       chunks:
         time: 1
       xarray_kwargs:
