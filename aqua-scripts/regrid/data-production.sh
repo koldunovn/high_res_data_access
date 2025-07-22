@@ -13,7 +13,7 @@ set -euo pipefail
 
 nproc=16
 
-var=2t
+var=tprate
 catalog=data-access
 model=IFS-FESOM
 exp=story-2017-historical-HPC

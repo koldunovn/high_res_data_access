@@ -1,9 +1,12 @@
 import argparse
 import os
+from cdo import Cdo
 from aqua import Reader
 from aqua.logger import log_configure
 from aqua.diagnostics.core import open_cluster, close_cluster
 from aqua.util import create_folder
+
+cdo = Cdo()
 
 def parse_args():
     """Parse command line arguments for the regrid data production."""
@@ -47,8 +50,9 @@ if __name__ == '__main__':
 
     create_folder(outdir, loglevel)
 
+    # We save with fix=False due to the Data Model
     reader = Reader(catalog=catalog, model=model, exp=exp, source=source,
-                    nproc=nproc, engine=engine, loglevel=loglevel)
+                    nproc=nproc, engine=engine, loglevel=loglevel, fix=False)
     data = reader.retrieve(var=var, startdate=startdate, enddate=enddate)
 
     filename = f"{model}_{exp}_{source}_{var}_{startdate}-{enddate}.nc"
