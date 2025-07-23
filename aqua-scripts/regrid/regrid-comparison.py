@@ -21,7 +21,7 @@ def parse_args():
 
     return parser.parse_args()
 
-def compute_cdo(filepath: str, weightspath:str, targetgridfile: str, outdir: str = './',
+def compute_cdo(filepath: str, weightspath:str, targetgridfile: str, nproc: int, outdir: str = './', 
                 loglevel: str = 'INFO'):
     """
     Compute the regridding using CDO.
@@ -32,6 +32,7 @@ def compute_cdo(filepath: str, weightspath:str, targetgridfile: str, outdir: str
         filepath (str): Path to the input file.
         weightspath (str): Path to the weights file.
         targetgridfile (str): Path to the target grid
+        nproc (int): Number of Dask workers.
         outdir (str): output directory. Default to './'
         loglevel (str): Logging level. Defaults to 'INFO'.
     """
@@ -44,7 +45,7 @@ def compute_cdo(filepath: str, weightspath:str, targetgridfile: str, outdir: str
 
     logger.info(f"CDO regridding completed in {time1 - start_time:.2f} seconds")
 
-    filename = os.path.join(os.path.dirname(filepath), f'regridded_cdo_{int(time.time())}.nc')
+    filename = os.path.join(outdir, f'regridded_cdo{nproc}_{int(time.time())}.nc')
     output.to_netcdf(filename)
     time2 = time.time()
     compute_time = time2 - time1
@@ -82,7 +83,7 @@ def compute_aqua(catalog: str, model: str, exp: str, source: str, nproc: int,
     logger.info(f"Start time: {start_time:.2f}")
 
     reader = Reader(catalog=catalog, model=model, exp=exp, source=source,
-                    nproc=nproc, regrid=regrid, loglevel=loglevel)
+                    nproc=nproc, regrid=regrid, loglevel=loglevel, chunks='D')
     data = reader.retrieve(var='tprate')
     time1 = time.time()
     retrieve_time = time1 - start_time
@@ -94,8 +95,8 @@ def compute_aqua(catalog: str, model: str, exp: str, source: str, nproc: int,
     compute_time = time2 - time1
     logger.info(f"Data computation time: {compute_time:.2f} seconds")
 
-    filename = f"{model}_{exp}_{source}_AQUAregridded_{int(time.time())}.nc"
-    filename = os.path.join(args.outdir, filename)
+    filename = f"{model}_{exp}_{source}_AQUAregridded{nproc}_{int(time.time())}.nc"
+    filename = os.path.join(outdir, filename)
     data_regridded.to_netcdf(filename)
     time3 = time.time()
     io_time = time3 - time2
@@ -109,7 +110,7 @@ def compute_aqua(catalog: str, model: str, exp: str, source: str, nproc: int,
 
     return retrieve_time, compute_time, io_time, total_time
 
-def compute_smmregrid(input_file, weights_file,
+def compute_smmregrid(input_file, weights_file, nproc: int,
                       outdir: str = './', loglevel: str = 'INFO'):
     """
     Compute the regrid using smmregrid
@@ -121,6 +122,7 @@ def compute_smmregrid(input_file, weights_file,
     Args:
         input_file (str): file to regrid
         weights_file (str): path of the weights
+        nproc (int): Number of Dask workers.
         outdir (str, opt): where to store the regridded file
         loglevel (str): Logging level. Defaults to 'INFO'.
     """
@@ -144,7 +146,7 @@ def compute_smmregrid(input_file, weights_file,
     compute_time = time2 - time1
     logger.info(f"Compute time: {compute_time:.2f}")
 
-    filename = f"smmregrid_regridded_{int(time.time())}.nc"
+    filename = f"smmregrid_regridded{nproc}_{int(time.time())}.nc"
     filename = os.path.join(outdir, filename)
 
     data_regridded.to_netcdf(filename)
@@ -182,7 +184,7 @@ if __name__ == '__main__':
     filepath = '/scratch/project_462000911/mnurisso/data-access/regrid-catalog/IFS-FESOM_story-2017-historical-HPC_hourly-hpz9-atm2d_tprate_20180101T0000-20180131T2300.nc'
     weightspath = '/appl/local/climatedt/data/AQUA/weights/weights_hpz9-nested_ycon_r100_l2d.nc'
     targetgridfile = './r360x180.nc'
-    repetitions = 3
+    repetitions = 10
 
     if nproc > 1:
         logger.info(f"Opening a cluster with {nproc} workers")
@@ -200,7 +202,7 @@ if __name__ == '__main__':
         if nproc == 1:
             cdo_ct, cdo_tt = compute_cdo(
                 filepath=filepath, weightspath=weightspath, targetgridfile=targetgridfile,
-                loglevel=loglevel, outdir=outdir
+                loglevel=loglevel, outdir=outdir, nproc=nproc
             )
             cdo_compute_time += cdo_ct
             cdo_total_time += cdo_tt
@@ -215,7 +217,8 @@ if __name__ == '__main__':
         total_time += t_time
 
         smm_ct, smm_io, smm_tt = compute_smmregrid(
-            input_file=filepath, weights_file=weightspath, outdir=outdir, loglevel=loglevel
+            input_file=filepath, weights_file=weightspath, outdir=outdir,
+            loglevel=loglevel, nproc=nproc
         )
         smm_compute_time += smm_ct
         smm_io_time += smm_io
