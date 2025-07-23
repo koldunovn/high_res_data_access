@@ -17,7 +17,7 @@ This folder contains the code to read data from a source and compute the monthly
 - `bridge`: this folder tests the data access with Bridge FDB, accessing the data not in the HPC but still not with the DataLake, in order to check if a difference from the pure HPC FDB access is present.
 - `soft_scaling`: in this folder we double workers and we double the length of data to process, to study the soft scaling with Dask.
 
-## `smmregrid` folder
+## `regrid` folder
 
 This folder contains the code to perform spatial regridding of the data. It is based on the smmregrid code, which is internally used by AQUA to perform spatial regridding. The code is simplified to focus on the regridding of data. The folder is still a WIP and a full benchmark is not yet available. The code is used to test the regridding capabilities and compare against CDO.
 
