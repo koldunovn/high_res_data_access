@@ -24,3 +24,4 @@ aqua add lumi-phase2 -e $AQUA_CATALOG/catalogs/lumi-phase2
 aqua add nextgems4 -e $AQUA_CATALOG/catalogs/nextgems4
 aqua add climatedt-e25.1 -e $AQUA_CATALOG/catalogs/climatedt-e25.1
 aqua add climatedt-o25.1 -e $AQUA_CATALOG/catalogs/climatedt-o25.1
+aqua add ci -e $AQUA_CATALOG/catalogs/ci
