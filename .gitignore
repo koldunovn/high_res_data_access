@@ -3,4 +3,5 @@
 *.out
 *.pyc
 *.grb
+*.nc
 __pycache__/

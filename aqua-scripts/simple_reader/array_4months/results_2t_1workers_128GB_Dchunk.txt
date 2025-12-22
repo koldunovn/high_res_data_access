@@ -1,0 +1,9 @@
+## Times for 2t with 1 workers and 128GB memory
+## Catalog: data-access, Model: IFS-FESOM, Experiment: story-2017-historical-HPC, Source: hourly-hpz9-atm2d, Regrid: r100, Engine: fdb
+## Average compute time: 453.45 seconds
+## Average total time: 456.61 seconds
+## Individual compute times:
+## Attempt; Total Time (s); Retrieve Time (s); Compute Time (s); I/O Time (s)
+1; 469.20; 4.40; 464.79; 0.01
+2; 448.29; 2.54; 445.73; 0.01
+3; 452.36; 2.50; 449.84; 0.02

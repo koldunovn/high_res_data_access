@@ -6,10 +6,10 @@ import pandas as pd
 def read_benchmark_file(filepath):
     """
     Read a single AQUA benchmark results file into a DataFrame.
-    
+
     Args:
         filepath (str): Path to the benchmark results file.
-    
+
     Returns:
         pd.DataFrame: DataFrame containing the benchmark results.
     """
@@ -53,6 +53,7 @@ def read_benchmark_file(filepath):
 
     return pd.DataFrame(records)
 
+
 def load_all_benchmarks(path_pattern="results_*.txt"):
     """
     Load all AQUA benchmark results files matching the given pattern into a single DataFrame.
@@ -71,6 +72,7 @@ def load_all_benchmarks(path_pattern="results_*.txt"):
     df_list = [read_benchmark_file(f) for f in files]
     return pd.concat(df_list, ignore_index=True)
 
+
 def chunk_translation(df_chunk):
     """Translate the 'Chunk Size' column in the DataFrame according to predefined mappings."""
     # The 'Chunk Size' column has to be translated according to the following dictionary:
@@ -78,7 +80,21 @@ def chunk_translation(df_chunk):
         'h': 1,
         '3h': 3,
         '6h': 6,
-        'D': 24
+        'D': 24,
+        'W': 168
     }
     df_chunk['Chunk Size'] = df_chunk['Chunk Size'].map(chunk_translation_dict)
+    return df_chunk
+
+
+def chunk_translation_reverse(df_chunk):
+    """Reverse translate the 'Chunk Size' column in the DataFrame according to predefined mappings."""
+    chunk_translation_dict_reverse = {
+        1: 'h',
+        3: '3h',
+        6: '6h',
+        24: 'D',
+        168: 'W'
+    }
+    df_chunk['Chunk Size'] = df_chunk['Chunk Size'].map(chunk_translation_dict_reverse)
     return df_chunk

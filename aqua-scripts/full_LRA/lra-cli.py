@@ -1,6 +1,6 @@
 import argparse
 import time
-from aqua import LRAgenerator
+from aqua.core.drop import Drop
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Process LRA generation parameters.")
@@ -16,7 +16,7 @@ if __name__ == '__main__':
     parser.add_argument('--tmpdir', type=str, required=True, help="Temporary directory for processing")
 
     args = parser.parse_args()
-    
+
     varname = args.var
     model = args.model
     exp = args.exp
@@ -34,14 +34,13 @@ if __name__ == '__main__':
     print(f"Start time: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(start_time))}")
     if region is not None:
         print(f"Region specified: {region}")
-    lra = LRAgenerator(
-                    catalog=catalog, model=model, exp=exp, source=source,
-                    var=varname, resolution=regrid, stat='mean', drop=True,
-                    frequency=frequency, fix=True, nproc=nproc,
-                    outdir=outdir, tmpdir=tmpdir,
-                    performance_reporting=True,
-                    loglevel="DEBUG", definitive=True, compact="cdo",
-                    region=region)
+    lra = Drop(catalog=catalog, model=model, exp=exp, source=source,
+               var=varname, resolution=regrid, stat='mean', drop=True,
+               frequency=frequency, fix=True, nproc=nproc,
+               outdir=outdir, tmpdir=tmpdir,
+               performance_reporting=True,
+               loglevel="DEBUG", definitive=True, compact="cdo",
+               region=region)
     print("---CHECK------")
     lra.check_integrity(varname)
     print("---RETRIEVE------")
