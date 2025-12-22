@@ -2,11 +2,12 @@ import argparse
 import os
 from cdo import Cdo
 from aqua import Reader
-from aqua.logger import log_configure
-from aqua.diagnostics.core import open_cluster, close_cluster
-from aqua.util import create_folder
+from aqua.core.logger import log_configure
+from aqua.diagnostics.base import open_cluster, close_cluster
+from aqua.core.util import create_folder
 
 cdo = Cdo()
+
 
 def parse_args():
     """Parse command line arguments for the regrid data production."""
@@ -24,6 +25,7 @@ def parse_args():
     parser.add_argument('--engine', type=str, default='fdb', help="Engine to use for FDB access (fdb or polytope)")
 
     return parser.parse_args()
+
 
 if __name__ == '__main__':
 
