@@ -15,7 +15,7 @@ This folder contains the code to read data from a source and compute the monthly
 - `array3d`: this folder contains bash files to launch 3d data analysis with an array of chunking or workers
 - `polytope`: this folder contains experimental access to data with the polytope engine (managed internally by AQUA). Different chunking are tested to check if there is an effect in the total time (due to queue time or other possible issues).
 - `bridge`: this folder tests the data access with Bridge FDB, accessing the data not in the HPC but still not with the DataLake, in order to check if a difference from the pure HPC FDB access is present.
-- `soft_scaling`: in this folder we double workers and we double the length of data to process, to study the soft scaling with Dask.
+- `soft_scaling_2d`: in this folder we double workers and we double the length of data to process, to study the soft scaling with Dask.
 
 ## `regrid` folder
 
@@ -24,3 +24,8 @@ This folder contains the code to perform spatial regridding of the data. It is b
 ## `full_LRA` folder
 
 This folder contains the code to read data from a source and compute the monthly aggregation of the data, but it is based on the full LRA code. It is used to test the full LRA code with different sources and chunking. Only a skeleton of the code is provided, as it is not used in the benchmarks. A visualization notebook is left with some preliminary results. Can be removed in the future.
+
+## Reproduce the plots
+
+In the paper "AQUA v1: The Application for QUality Assessment for the Climate Change Adaptation Digital Twin" figure 5 and figure 6 show the results of the benchmarks.
+Figure 5 can be reproduced running the notebook `simple_reader/plots_4months.ipynb`, while figure 6 can be reproduced running the notebook `regrid/plot.ipynb`.
