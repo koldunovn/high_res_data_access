@@ -22,6 +22,8 @@ This example not only installs AQUA, but also contains the info on how to access
 A customized AQUA catalog, called `aqua_catalog` is available in the main folder of this repository.
 It contains the info to access the dataset originally used in the benchmarks, making explicit the access from the HPC FDB or the Bridge FDB, in order to take into account the possible differences in the access time.
 
+Note: Climate Digital Twin data could be in the future be replaced by newer version of the data. This will require to use a different catalog. Please contact the authors of the paper for more information on how to access the data and how to set up the environment to run the benchmarks if any of the data is not available anymore.
+
 ### Figure 5 benchmark
 
 The code to reproduce the figure 5 is in the `simple_reader` folder.
