@@ -2,9 +2,9 @@ import argparse
 import time
 import os
 from aqua import Reader
-from aqua.logger import log_configure
-from aqua.diagnostics.core import open_cluster, close_cluster
-from aqua.util import create_folder
+from aqua.core.logger import log_configure
+from aqua.diagnostics.base import open_cluster, close_cluster
+from aqua.core.util import create_folder
 
 def parse_args():
     """Parse command line arguments for the Reader script."""
