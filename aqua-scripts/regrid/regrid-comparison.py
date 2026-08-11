@@ -6,9 +6,9 @@ import xarray as xr
 from cdo import Cdo
 from smmregrid import Regridder
 from aqua import Reader
-from aqua.logger import log_configure
-from aqua.diagnostics.core import open_cluster, close_cluster
-from aqua.util import create_folder, dump_yaml, load_yaml
+from aqua.core.logger import log_configure
+from aqua.diagnostics.base import open_cluster, close_cluster
+from aqua.core.util import create_folder, dump_yaml, load_yaml
 
 cdo = Cdo()
 
