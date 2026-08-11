@@ -23,3 +23,7 @@ We distinguish between two main modes of access: remote (e.g. from local machine
 ## Results do far:
 
 [In this this file for a moment](https://docs.google.com/spreadsheets/d/1xj_2v5IYKr2tEPa3Z9Uf9-kquveRIbx1MIeQeBGfQHY/edit?usp=sharing)
+
+## AQUA paper reproducibility code
+
+The code devoted to reproduce the benchmarks presented in the paper "AQUA v1.0.0: The Application for QUality Assessment for the Climate Change Adaptation Digital Twin - the core engine" is available in this repository in the `aqua-scripts` folder, where a dedicated README file is available to explain how to reproduce the benchmarks and the plots in the paper.
