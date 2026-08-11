@@ -21,10 +21,6 @@ This folder contains the code to read data from a source and compute the monthly
 
 This folder contains the code to perform spatial regridding of the data. It is based on the smmregrid code, which is internally used by AQUA to perform spatial regridding. The code is simplified to focus on the regridding of data. The folder is still a WIP and a full benchmark is not yet available. The code is used to test the regridding capabilities and compare against CDO.
 
-## `full_LRA` folder
-
-This folder contains the code to read data from a source and compute the monthly aggregation of the data, but it is based on the full LRA code. It is used to test the full LRA code with different sources and chunking. Only a skeleton of the code is provided, as it is not used in the benchmarks. A visualization notebook is left with some preliminary results. Can be removed in the future.
-
 ## Reproduce the plots
 
 In the paper "AQUA v1: The Application for QUality Assessment for the Climate Change Adaptation Digital Twin" figure 5 and figure 6 show the results of the benchmarks.
