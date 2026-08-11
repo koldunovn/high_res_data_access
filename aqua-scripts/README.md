@@ -24,6 +24,8 @@ It contains the info to access the dataset originally used in the benchmarks, ma
 
 Note: Climate Digital Twin data could be in the future be replaced by newer version of the data. This will require to use a different catalog. Please contact the authors of the paper for more information on how to access the data and how to set up the environment to run the benchmarks if any of the data is not available anymore.
 
+Note: Some benchmarks make use of `open_cluster` and `close_cluster` from `aqua.diagnostics.base`. This module will be described in a companion paper. To reproduce the benchmarks the user can substitute these functions with pure dask code, using `dask.distributed.Client` and `client.close()`.
+
 ### Figure 5 benchmark
 
 The code to reproduce the figure 5 is in the `simple_reader` folder.
