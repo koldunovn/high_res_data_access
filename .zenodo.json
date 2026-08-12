@@ -1,0 +1,16 @@
+{
+    "creators": [
+      {
+        "affiliation": "Politecnico di Torino, Italy",
+        "name": "Nurisso, Matteo",
+        "orcid": "0000-0002-5962-0680"
+      },
+      {
+        "affiliation": "AWI, Germany",
+        "name": "Koldunov, Nikolay",
+        "orcid": "0000-0002-3365-8146"
+      }
+    ],
+    "description": "High resolution data access: a series of comparison of access methods.",
+    "title": "High resolution data access"
+  }

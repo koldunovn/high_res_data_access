@@ -51,3 +51,8 @@ First, the `data-production.py` code is used to store on disk the data to be reg
 A `data-production.sh` script is also provided to facilitate the execution of the `data-production.py` code on HPC.
 Then, the `regrid-comparison.py` code is used to perform the regridding of the data with smmregrid alone, AQUA and CDO, and to compare the results.
 The `regrid-comparison.sh` script is provided to facilitate the execution of the `regrid-comparison.py` code on HPC and it contains an array of jobs to perform the regridding with different number of workers.
+
+### Extra benchmarks
+
+The `simple_reader/` folder contains some extra benchmarks that were only mentioned in the text.
+In particular, the `simple_reader/polytope` folder contains the bash script to run the polytope benchmark, which is a benchmark to test the performance of the AQUA code when reading data from the remote data as the users external to the Climate Digital Twin initiative would do.
